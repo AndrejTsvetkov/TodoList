@@ -19,8 +19,3 @@ class ToDo:
         for i in self.todolist:
             print(i)
 
-
-today_todo = ToDo(['Сходить в магазин'])
-today_todo.add_task('Позаниматься английским')
-today_todo.delete_task('Сходить в магазин')
-today_todo.print_tasks()
