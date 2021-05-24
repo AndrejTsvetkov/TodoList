@@ -1,4 +1,5 @@
 import tkinter as tk
+import database
 from datetime import datetime, date
 
 
@@ -65,12 +66,15 @@ class ToDo(tk.Frame):
         self.insert_btn.grid(row=4, column=1, sticky="nsew")
         self.delete_btn.grid(row=5, column=0, columnspan=2, sticky="ew")
 
+        current_list_of_tasks = database.get_tasks()
+        for task in current_list_of_tasks:
+            self.todo_list.insert(tk.END, task[0])
+
+
     def add_item(self):
         if self.entry_todo.get():
             self.todo_list.insert(tk.END, self.entry_todo.get())
             self.entry_todo.delete(0, tk.END)
-
-        print(self.todo_list.size())
 
     def delete_item(self):
         self.todo_list.delete(tk.ACTIVE)
