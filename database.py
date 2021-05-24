@@ -19,3 +19,8 @@ conn.commit()
 def get_tasks():
     c.execute("SELECT task_name from todolist")
     return c.fetchall()
+
+
+def insert_task(task_name, task_status):
+    with conn:
+        c.execute("INSERT into todolist (task_name, task_status, date) VALUES (?, ?, date('now'))", (task_name, task_status))
