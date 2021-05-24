@@ -52,7 +52,7 @@ class ToDo(tk.Frame):
                                     command=self.add_item
                                     )
 
-        self.delete_btn = tk.Button(master=self.frame, text="Delete selected",
+        self.delete_btn = tk.Button(master=self.frame, text="Delete",
                                     background="#343434",  # фоновый цвет кнопки
                                     foreground="#DFDFDD",  # цвет текста
                                     activebackground="#1D1D1D",
@@ -63,8 +63,22 @@ class ToDo(tk.Frame):
                                     font="Roboto 14",  # высота шрифта
                                     command=self.delete_item
                                     )
+
+        self.done_btn = tk.Button(master=self.frame, text="Done",
+                                  background="#343434",  # фоновый цвет кнопки
+                                  foreground="#DFDFDD",  # цвет текста
+                                  activebackground="#1D1D1D",
+                                  activeforeground="#8C8C8C",
+                                  borderwidth=0,
+                                  padx="0",  # отступ от границ до содержимого по горизонтали
+                                  pady="0",  # отступ от границ до содержимого по вертикали
+                                  font="Roboto 14",  # высота шрифта
+                                  command=self.done_item
+                                  )
+
         self.insert_btn.grid(row=4, column=1, sticky="nsew")
-        self.delete_btn.grid(row=5, column=0, columnspan=2, sticky="ew")
+        self.delete_btn.grid(row=5, column=1, sticky="ew")
+        self.done_btn.grid(row=5, column=0, sticky="ew")
 
         self.get_data_from_database()
 
@@ -81,6 +95,10 @@ class ToDo(tk.Frame):
             self.entry_todo.delete(0, tk.END)
 
     def delete_item(self):
+        self.todo_list.delete(tk.ACTIVE)
+
+    def done_item(self):
+        database.make_task_done(self.todo_list.get(tk.ACTIVE))
         self.todo_list.delete(tk.ACTIVE)
 
 

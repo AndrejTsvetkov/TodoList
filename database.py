@@ -17,10 +17,15 @@ conn.commit()
 
 
 def get_tasks():
-    c.execute("SELECT task_name from todolist")
+    c.execute("SELECT task_name from todolist where task_status = 0")
     return c.fetchall()
 
 
 def insert_task(task_name, task_status):
     with conn:
         c.execute("INSERT into todolist (task_name, task_status, date) VALUES (?, ?, date('now'))", (task_name, task_status))
+
+
+def make_task_done(task_name):
+    with conn:
+        c.execute("UPDATE todolist SET task_status = 1 WHERE task_status = 0 AND task_name = :task_name", {'task_name': task_name})
