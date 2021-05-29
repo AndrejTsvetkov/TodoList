@@ -16,16 +16,31 @@ conn.commit()
 # conn.commit()
 
 
-def get_tasks():
-    c.execute("SELECT task_name from todolist where task_status = 0")
+def get_current_tasks():
+    c.execute("SELECT task_name FROM todolist WHERE task_status = 0")
+    return c.fetchall()
+
+
+def get_done_tasks():
+    c.execute("SELECT task_name, date FROM todolist WHERE task_status = 1")
     return c.fetchall()
 
 
 def insert_task(task_name, task_status):
     with conn:
-        c.execute("INSERT into todolist (task_name, task_status, date) VALUES (?, ?, date('now'))", (task_name, task_status))
+        c.execute("INSERT INTO todolist (task_name, task_status, date) VALUES (?, ?, date('now'))", (task_name, task_status))
 
 
 def make_task_done(task_name):
     with conn:
         c.execute("UPDATE todolist SET task_status = 1 WHERE task_status = 0 AND task_name = :task_name", {'task_name': task_name})
+
+
+def delete_task(task_name):
+    with conn:
+        c.execute("DELETE FROM todolist WHERE task_status = 0 AND date == date('now') and task_name = :task_name", {'task_name': task_name})
+
+
+def get_todays_tasks():
+    c.execute("SELECT task_name, date, task_status FROM todolist WHERE task_status = 0 AND date == date('now')")
+    return c.fetchall()
