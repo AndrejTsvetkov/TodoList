@@ -21,27 +21,27 @@ class ToDo(tk.Frame):
 
         self.weekday_label = tk.Label(master=self.frame, text=ToDo.week_days[datetime.now().weekday()],
                                       font="Roboto 16 bold",
-                                      bg="#353a40", fg="#e2e9f1")
+                                      bg="#27292D", fg="#e2e9f1")
         self.date_label = tk.Label(master=self.frame, text=date.today().strftime("%b %d, %Y"), font="Roboto 12",
-                                   bg="#353a40",
+                                   bg="#27292D",
                                    fg="#5c636b")
         self.weekday_label.grid(row=0, column=0, columnspan=2, sticky="ew")
         self.date_label.grid(row=1, column=0, columnspan=2, sticky="new")
 
-        self.empty_label = tk.Label(master=self.frame, bg="#353a40")
+        self.empty_label = tk.Label(master=self.frame, bg="#27292D")
         self.empty_label.grid(row=2, column=0, columnspan=2, sticky="nsew")
 
-        self.todo_list = tk.Listbox(master=self.frame, font="Roboto 16 italic", bg="#353a40", bd=0, fg="#DFDFDD",
+        self.todo_list = tk.Listbox(master=self.frame, font="Roboto 16 italic", bg="#27292D", bd=0, fg="#DFDFDD",
                                     highlightthickness=0, selectbackground="#273a64")
         self.todo_list.grid(row=3, column=0, columnspan=2, sticky="nsew")
 
         self.entry_todo = tk.Entry(master=self.frame, font="Roboto 14 italic", fg="#DFDFDD", justify="left", bd=0,
                                    width="10",
-                                   bg="#343434")
+                                   bg="#2D2F34")
         self.entry_todo.grid(row=4, column=0, sticky="nsew")
 
         self.insert_btn = tk.Button(master=self.frame, text="Add",
-                                    background="#343434",  # фоновый цвет кнопки
+                                    background="#2D2F34",  # фоновый цвет кнопки
                                     foreground="#DFDFDD",  # цвет текста
                                     activebackground="#1D1D1D",
                                     activeforeground="#8C8C8C",
@@ -53,7 +53,7 @@ class ToDo(tk.Frame):
                                     )
 
         self.delete_btn = tk.Button(master=self.frame, text="Delete",
-                                    background="#343434",  # фоновый цвет кнопки
+                                    background="#2D2F34",  # фоновый цвет кнопки
                                     foreground="#DFDFDD",  # цвет текста
                                     activebackground="#1D1D1D",
                                     activeforeground="#8C8C8C",
@@ -65,7 +65,7 @@ class ToDo(tk.Frame):
                                     )
 
         self.done_btn = tk.Button(master=self.frame, text="Done",
-                                  background="#343434",  # фоновый цвет кнопки
+                                  background="#2D2F34",  # фоновый цвет кнопки
                                   foreground="#DFDFDD",  # цвет текста
                                   activebackground="#1D1D1D",
                                   activeforeground="#8C8C8C",
@@ -77,7 +77,7 @@ class ToDo(tk.Frame):
                                   )
 
         self.statistic_btn = tk.Button(master=self.frame, text="Get statistic",
-                                       background="#343434",  # фоновый цвет кнопки
+                                       background="#2D2F34",  # фоновый цвет кнопки
                                        foreground="#DFDFDD",  # цвет текста
                                        activebackground="#1D1D1D",
                                        activeforeground="#8C8C8C",
@@ -101,8 +101,7 @@ class ToDo(tk.Frame):
             self.todo_list.insert(tk.END, task[0])
 
     def add_item(self):
-        # добавить проверку на невидимые символы (например пробел в задаче)
-        if self.entry_todo.get():
+        if self.entry_todo.get() and not self.entry_todo.get().isspace():
             self.todo_list.insert(tk.END, self.entry_todo.get())
             database.insert_task(self.entry_todo.get(), 0)
             self.entry_todo.delete(0, tk.END)
