@@ -12,12 +12,14 @@ c.execute("""CREATE TABLE IF NOT EXISTS todolist (
             )""")
 conn.commit()
 # conn.close() deal with "close" issue
+# c.execute("SELECT time('now')")
+# print(c.fetchall())
 
 
 # If we didn't finish any tasks yesterday they will be deleted automatically the next day
 def delete_not_done_tasks():
     with conn:
-        c.execute("DELETE FROM todolist WHERE task_status = 0 AND date < date('now')")
+        c.execute("DELETE FROM todolist WHERE task_status = 0 AND date < date('now', 'localtime')")
 
 
 def get_current_tasks():
@@ -51,6 +53,6 @@ def delete_task(task_name):
                   {'task_name': task_name})
 
 
-def get_todays_tasks():
-    c.execute("SELECT task_name, date, task_status FROM todolist WHERE task_status = 0 AND date == date('now')")
+def get_todays_completed_tasks():
+    c.execute("SELECT task_name FROM todolist WHERE task_status = 1 AND date == date('now')")
     return c.fetchall()

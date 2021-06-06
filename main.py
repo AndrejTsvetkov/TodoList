@@ -1,7 +1,7 @@
 import tkinter as tk
+from tkinter import filedialog as fd
 import database
 from datetime import datetime, date
-
 
 class ToDo(tk.Frame):
     week_days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -116,9 +116,16 @@ class ToDo(tk.Frame):
 
     @staticmethod
     def get_statistic():
-        print('Все решенные задачи', database.get_done_tasks())
-        print('Текущие нерешенные задачи', database.get_todays_tasks())
+        path = fd.askdirectory(title="Save statistic")
+        default_file_name = "statistic.txt"
 
+        if path:
+            todays_completed_tasks = database.get_todays_completed_tasks()
+            with open(f'{path}/{default_file_name}', 'w') as wf:
+                wf.write("I`ve done today next tasks:")
+                wf.write("\n"*2)
+                for task in todays_completed_tasks:
+                    wf.write(f'- {task[0]}\n')
 
 def main():
     root = tk.Tk()
