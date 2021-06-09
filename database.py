@@ -34,7 +34,7 @@ def get_current_tasks(conn):
 
 
 def insert_task(conn, task_name, task_status):
-    """ Insert task with it's status """
+    """ Insert task with its status """
     cur = conn.cursor()
     with conn:
         cur.execute("INSERT INTO todolist (task_name, task_status, date) VALUES (?, ?, date('now'))",
