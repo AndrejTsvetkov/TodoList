@@ -55,12 +55,12 @@ def delete_task(conn, task_name):
     """ Delete task"""
     cur = conn.cursor()
     with conn:
-        cur.execute("DELETE FROM todolist WHERE task_status = 0 AND date == date('now') and task_name = :task_name",
+        cur.execute("DELETE FROM todolist WHERE task_status = 0 AND date == date('now', 'localtime') and task_name = :task_name",
                     {'task_name': task_name})
 
 
 def get_todays_completed_tasks(conn):
     """ Get today's completed tasks """
     cur = conn.cursor()
-    cur.execute("SELECT task_name FROM todolist WHERE task_status = 1 AND date == date('now')")
+    cur.execute("SELECT task_name FROM todolist WHERE task_status = 1 AND date == date('now', 'localtime')")
     return cur.fetchall()
