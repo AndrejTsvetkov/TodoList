@@ -13,6 +13,8 @@ class ToDo(tk.Frame):
         self.master = master
         self.master.title("To-Do")
         self.master.minsize(width=300, height=400)
+        p1 = tk.PhotoImage(file='icon/todo_icon.png')
+        self.master.iconphoto(False, p1)
         self.create_widgets()
 
     def create_widgets(self):
